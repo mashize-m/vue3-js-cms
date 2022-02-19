@@ -4,7 +4,14 @@
     <router-link to="/login">登录</router-link>
     <router-link to="/main">首页</router-link>
     <router-view />
-    <el-button type="primary">哈哈</el-button>
+
+    <el-button>Default</el-button>
+    <el-button type="primary">Primary</el-button>
+    <el-button type="success">Success</el-button>
+    <el-button type="info">Info</el-button>
+    <el-button type="warning">Warning</el-button>
+    <el-button type="danger">Danger</el-button>
+    <el-button>中文</el-button>
   </div>
 </template>
 

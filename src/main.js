@@ -3,6 +3,9 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
+// 测试axiosdemo
+import './service/axios_demo'
+
 // 全局引用element-plus样式
 import 'element-plus/dist/index.css'
 
