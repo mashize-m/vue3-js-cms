@@ -4,6 +4,7 @@
     <router-link to="/login">登录</router-link>
     <router-link to="/main">首页</router-link>
     <router-view />
+    <el-button type="primary">哈哈</el-button>
   </div>
 </template>
 
