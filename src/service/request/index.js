@@ -2,7 +2,7 @@
 
 /* 本文件说明：
 1. 类的封装：可以创建多个axios实例，例如：const mzRequest1 = new MzRequest(config1) / const mzRequest2 = new MzRequest(config2)
-2. 类的拦截器封装：可以对不同的axios实例，创建不同的拦截器。例如：mzRequest1的config1里有拦截器，mzRequest2的config2里没有拦截器
+2. 实例的拦截器封装：可以对不同的axios实例，创建该实例特有的拦截器。例如：mzRequest1的config1里有拦截器，mzRequest2的config2里没有拦截器
 */
 
 /* 使用说明：
