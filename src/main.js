@@ -5,6 +5,7 @@ import store from './store'
 
 // 测试axiosdemo
 // import './service/axios_demo'
+// 封装axios测试
 import mzRequest from '@/service'
 
 // 全局引用element-plus样式
@@ -15,6 +16,7 @@ app.use(router)
 app.use(store)
 app.mount('#app')
 
+// 封装axios测试
 mzRequest.request({
   url: '/home/multidata',
   method: 'GET'
