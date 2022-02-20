@@ -35,6 +35,9 @@ import axios from 'axios'
 //   })
 
 // 4.全局配置
+
+// baseURL和url关系：http://httpbin.org/user  baseURL：'http://httpbin.org'。url：'/user'
+
 // `baseURL` 将自动加在 `url` 前面，除非 `url` 是一个绝对 URL。
 // 它可以通过设置一个 `baseURL` 便于为 axios 实例的方法传递相对 URL
 axios.defaults.baseURL = 'http://httpbin.org'
