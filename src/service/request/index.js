@@ -1,7 +1,7 @@
 // 封装 MzRequest 类，里面包含get/post等方法
 
 /* 本文件说明：
-拦截器的封装：可以携带添加token等
+拦截器的封装：可以携带添加token，添加loading等
 1. 少见：类的封装：可以创建多个axios实例，例如：const mzRequest1 = new MzRequest(config1) / const mzRequest2 = new MzRequest(config2)
 2. 实例的拦截器封装：可以对不同的axios实例，创建该实例特有的拦截器。例如：mzRequest1的config1里有拦截器，mzRequest2的config2里没有拦截器
 3. 全局（类的）拦截器封装：所有实例都会有的拦截器。例如 mzRequest1 和 mzRequest2 都会共有的拦截器
@@ -20,10 +20,12 @@ get、post请求方法封装
 */
 
 import axios from 'axios'
+import { ElLoading } from 'element-plus'
 
 class MzRequest {
   instance
   interceptors
+  loadingInstance
   // constructor 是一种用于创建和初始化class创建的对象的特殊方法
   constructor(config) {
     // 类的封装：通过传入不同的config对象，可以创建多个mzRequest（axios）实例，
@@ -41,6 +43,12 @@ class MzRequest {
     // 全局（类的）拦截器封装：所有实例都会有的拦截器
     this.instance.interceptors.request.use(
       (config) => {
+        // 全局拦截器-添加loading（还需要在响应拦截器，关闭Loading）
+        this.loadingInstance = ElLoading.service({
+          lock: true,
+          text: '正在请求~',
+          background: 'rgba(0,0,0,0.5)'
+        })
         console.log('所有实例都会有的拦截器--请求成功拦截')
         return config
       },
@@ -53,6 +61,9 @@ class MzRequest {
     this.instance.interceptors.response.use(
       (res) => {
         console.log('所有实例都会有的拦截器--响应成功拦截')
+        // 将loading移除
+        this.loadingInstance?.close()
+
         // 例子：根据res.data当中的returnCode属性判断请求数据是否成功。这里的returnCode和'-1001'只是一个例子，具体的可以根据返回的数据判断
         const data = res.data
         if (data.returnCode === '-1001') {
@@ -63,6 +74,9 @@ class MzRequest {
       },
       (err) => {
         console.log('所有实例都会有的拦截器--响应失败拦截')
+        // 将loading移除
+        this.loadingInstance?.close()
+
         // 例子：根据 HttpErrorCode 显示不同的错误信息，通过switch判断所有的状态码即可
         switch (err.response.status) {
           case '404':
