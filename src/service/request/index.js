@@ -1,10 +1,16 @@
 // 封装 MzRequest 类，里面包含get/post等方法
 
 /* 本文件说明：
-1. 类的封装：可以创建多个axios实例，例如：const mzRequest1 = new MzRequest(config1) / const mzRequest2 = new MzRequest(config2)
+拦截器的封装：可以携带添加token等
+1. 少见：类的封装：可以创建多个axios实例，例如：const mzRequest1 = new MzRequest(config1) / const mzRequest2 = new MzRequest(config2)
 2. 实例的拦截器封装：可以对不同的axios实例，创建该实例特有的拦截器。例如：mzRequest1的config1里有拦截器，mzRequest2的config2里没有拦截器
-3. 类的拦截器封装：所有实例都会有的拦截器。例如 mzRequest1 和 mzRequest2 都会共有的拦截器
-4. 实例方法单独的拦截器：某个实例的某一个方法的拦截器。例如 mzRequest1实例的get请求中，进行请求拦截和响应拦截
+3. 全局（类的）拦截器封装：所有实例都会有的拦截器。例如 mzRequest1 和 mzRequest2 都会共有的拦截器
+4. 少见：实例方法单独的拦截器：某个实例的某一个方法的拦截器。例如 mzRequest1实例的get请求中，进行请求拦截和响应拦截
+响应错误信息的处理：
+①数据请求成功，但附带的属性状态码不对，例如：data.returnCode === '-1001'
+②数据请求失败，返回的是HttpErrorCode状态码，4XX和5XX 都是请求失败
+
+get、post请求方法封装
 */
 
 /* 使用说明：
@@ -32,7 +38,7 @@ class MzRequest {
       this.interceptors?.responseInterceptors,
       this.interceptors?.responseInterceptorsCatch
     )
-    // 类的拦截器封装：所有实例都会有的拦截器
+    // 全局（类的）拦截器封装：所有实例都会有的拦截器
     this.instance.interceptors.request.use(
       (config) => {
         console.log('所有实例都会有的拦截器--请求成功拦截')
@@ -40,16 +46,32 @@ class MzRequest {
       },
       (err) => {
         console.log('所有实例都会有的拦截器--请求失败拦截')
+        console.log(err.request.status)
         return err
       }
     )
     this.instance.interceptors.response.use(
       (res) => {
         console.log('所有实例都会有的拦截器--响应成功拦截')
-        return res
+        // 例子：根据res.data当中的returnCode属性判断请求数据是否成功。这里的returnCode和'-1001'只是一个例子，具体的可以根据返回的数据判断
+        const data = res.data
+        if (data.returnCode === '-1001') {
+          console.log('请求失败~，错误信息')
+        } else {
+          return res
+        }
       },
       (err) => {
         console.log('所有实例都会有的拦截器--响应失败拦截')
+        // 例子：根据 HttpErrorCode 显示不同的错误信息，通过switch判断所有的状态码即可
+        switch (err.response.status) {
+          case '404':
+            console.log('404')
+            break
+          case '501':
+            console.log('501')
+            break
+        }
         return err
       }
     )

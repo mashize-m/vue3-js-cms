@@ -7,6 +7,8 @@
    config可以手写，可以通过外部导入相关配置
 3. baseURL的不同代表创建不同的axios实例
    interceptors的有无代表可以对不同的axios实例，创建不同的拦截器
+  此时可以在axios实例的请求拦截器中，添加token，以实现请求时携带token 的情况
+  （携带token也可以在全局（类的）请求拦截器中添加，这样指所有的实例都携带这一个token）
 
 4. 将实例导出，
    此时：mzRequest.get() == axios.get()
@@ -25,6 +27,12 @@ const mzRequest = new MzRequest({
   timeout: TIME_OUT,
   interceptors: {
     requestInterceptors: (config) => {
+      // 请求时携带token
+      const token = ''
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`
+      }
+
       console.log('mzRequest实例拦截器--请求拦截成功')
       return config
     },
