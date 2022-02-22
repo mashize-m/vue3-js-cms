@@ -17,17 +17,22 @@ app.use(store)
 app.mount('#app')
 
 // 封装axios测试
-mzRequest.request({
-  url: '/home/multidata',
-  method: 'GET',
-  interceptors: {
-    requestInterceptors: (config) => {
-      console.log('实例方法单独的拦截器--get方法的请求成功拦截器')
-      return config
-    },
-    responseInterceptors: (res) => {
-      console.log('实例方法单独的拦截器--get方法的响应成功拦截器')
-      return res
+mzRequest
+  .get({
+    url: '/home/multidata',
+    interceptors: {
+      requestInterceptors: (config) => {
+        console.log('实例方法单独的拦截器--get方法的请求成功拦截器')
+        return config
+      },
+      responseInterceptors: (res) => {
+        console.log('实例方法单独的拦截器--get方法的响应成功拦截器')
+        return res
+      }
     }
-  }
-})
+  })
+  .then((res) => {
+    console.log(res.data)
+    console.log(res.data.data)
+    console.log(res.data.returnCode)
+  })

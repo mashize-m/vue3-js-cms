@@ -92,17 +92,41 @@ class MzRequest {
   }
 
   request(config) {
-    // 实例方法单独的拦截器：某个实例的某一个方法的拦截器
-    if (config.interceptors?.requestInterceptors) {
-      // 请求成功拦截器的本质，其实是一个函数，并且返回值是config。所以在这里可以直接调用这个函数
-      config = config.interceptors.requestInterceptors(config)
-    }
-    this.instance.request(config).then((res) => {
-      if (config.interceptors?.responseInterceptors) {
-        res = config.interceptors.requestInterceptors(res)
+    return new Promise((resolve, reject) => {
+      // 1.实例方法单独的拦截器（请求拦截器）：某个实例的某一个方法的拦截器。--先进行拦截处理
+      if (config.interceptors?.requestInterceptors) {
+        // 请求成功拦截器的本质，其实是一个函数，并且返回值是config。所以在这里可以直接调用这个函数
+        config = config.interceptors.requestInterceptors(config)
       }
-      console.log(res)
+      // 2.这里才是真正的发送request请求
+      this.instance
+        .request(config)
+        .then((res) => {
+          // 3.实例方法单独的拦截器（响应拦截器）：单个请求对响应数据的处理
+          if (config.interceptors?.responseInterceptors) {
+            res = config.interceptors.responseInterceptors(res)
+          }
+          // 将结果res，通过resolve返回出去
+          resolve(res)
+          // console.log(res)
+        })
+        .catch((err) => {
+          reject(err)
+        })
     })
+  }
+
+  get(config) {
+    return this.request({ ...config, method: 'GET' })
+  }
+  post(config) {
+    return this.request({ ...config, method: 'POST' })
+  }
+  delete(config) {
+    return this.request({ ...config, method: 'DELETE' })
+  }
+  patch(config) {
+    return this.request({ ...config, method: 'PATCH' })
   }
 }
 
