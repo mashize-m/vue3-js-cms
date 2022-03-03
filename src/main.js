@@ -3,10 +3,15 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
+// 引入normalize.css
+import 'normalize.css'
+// 引入自定义样式
+import '@/assets/css/index.less'
+
 // 测试axiosdemo
 // import './service/axios_demo'
 // 封装axios测试
-import mzRequest from '@/service'
+// import mzRequest from '@/service'
 
 // 全局引用element-plus样式
 import 'element-plus/dist/index.css'
@@ -17,6 +22,7 @@ app.use(store)
 app.mount('#app')
 
 // 封装axios测试
+/*
 mzRequest
   .get({
     url: '/home/multidata',
@@ -36,3 +42,4 @@ mzRequest
     console.log(res.data.data)
     console.log(res.data.returnCode)
   })
+*/

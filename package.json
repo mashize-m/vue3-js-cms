@@ -11,9 +11,11 @@
     "commit": "cz"
   },
   "dependencies": {
+    "@element-plus/icons-vue": "^1.0.0",
     "axios": "^0.26.0",
     "core-js": "^3.6.5",
     "element-plus": "^2.0.2",
+    "normalize.css": "^8.0.1",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.0-0"
@@ -38,8 +40,8 @@
     "less": "^3.0.4",
     "less-loader": "^5.0.0",
     "prettier": "^2.5.1",
-    "unplugin-auto-import": "^0.6.0",
-    "unplugin-vue-components": "^0.17.18"
+    "unplugin-auto-import": "^0.6.1",
+    "unplugin-vue-components": "^0.17.21"
   },
   "config": {
     "commitizen": {
