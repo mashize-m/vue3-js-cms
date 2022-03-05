@@ -1,6 +1,6 @@
 <template>
   <div class="login-account">
-    <el-form label-width="60px" :rules="rules" :model="account">
+    <el-form label-width="60px" :rules="rules" :model="account" ref="formRef">
       <el-form-item label="账号" prop="name">
         <el-input v-model="account.name"></el-input>
       </el-form-item>
@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { defineComponent, reactive } from 'vue'
+import { defineComponent, reactive, ref } from 'vue'
 
 export default defineComponent({
   setup() {
@@ -61,7 +61,23 @@ export default defineComponent({
       ]
     }
 
-    return { account, rules }
+    const formRef = ref()
+
+    const accountLoginAction = () => {
+      // ElementPlus的Form组件的方法 validate（验证）
+      formRef.value.validate((valid) => {
+        if (valid) {
+          console.log('验证信息通过--提交账号登录的逻辑')
+        }
+      })
+    }
+
+    return {
+      account,
+      rules,
+      accountLoginAction,
+      formRef
+    }
   }
 })
 </script>

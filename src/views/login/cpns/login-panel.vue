@@ -8,7 +8,8 @@
             <el-icon style="top: 2px"><avatar /></el-icon>账号登录
           </span>
         </template>
-        <login-account></login-account>
+        <!-- 3.组件中通过ref属性绑定accountRef -->
+        <login-account ref="accountRef"></login-account>
       </el-tab-pane>
       <el-tab-pane>
         <template #label>
@@ -42,12 +43,21 @@ export default defineComponent({
   },
   setup() {
     const isKeepPassword = ref(true)
+
+    // 1.定义一个null的ref对象
+    const accountRef = ref(null)
+
     const handleLoginClick = () => {
       console.log('立即登录')
+      // 4.获取到组件对象，进行使用
+      accountRef.value?.accountLoginAction()
     }
+
     return {
       isKeepPassword,
-      handleLoginClick
+      handleLoginClick,
+      // 2.将accountRef返回出去
+      accountRef
     }
   }
 })
