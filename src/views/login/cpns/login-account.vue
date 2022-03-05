@@ -5,7 +5,7 @@
         <el-input v-model="account.name"></el-input>
       </el-form-item>
       <el-form-item label="密码" prop="password">
-        <el-input v-model="account.password"></el-input>
+        <el-input v-model="account.password" show-password></el-input>
       </el-form-item>
     </el-form>
   </div>
@@ -13,12 +13,13 @@
 
 <script>
 import { defineComponent, reactive, ref } from 'vue'
+import localCache from '@/utils/localcache.js'
 
 export default defineComponent({
   setup() {
     const account = reactive({
-      name: '',
-      password: ''
+      name: localCache.getCache('name') ?? '',
+      password: localCache.getCache('password') ?? ''
     })
 
     // 编写rule规则，elementplus框架也是应用的async-validator库。
@@ -61,13 +62,23 @@ export default defineComponent({
       ]
     }
 
+    // 为了表单信息验证，先获取当前的表单对象
     const formRef = ref()
 
-    const accountLoginAction = () => {
+    const accountLoginAction = (isKeepPassword) => {
       // ElementPlus的Form组件的方法 validate（验证）
       formRef.value.validate((valid) => {
         if (valid) {
           console.log('验证信息通过--提交账号登录的逻辑')
+          // 1.判断是否需要记住密码
+          if (isKeepPassword.value) {
+            localCache.setCache('name', account.name)
+            localCache.setCache('password', account.password)
+          } else {
+            localCache.deleteCache('name')
+            localCache.deleteCache('password')
+          }
+          // 2.开始进行登录验证
         }
       })
     }

@@ -50,7 +50,7 @@ export default defineComponent({
     const handleLoginClick = () => {
       console.log('立即登录')
       // 4.获取到组件对象，进行使用
-      accountRef.value?.accountLoginAction()
+      accountRef.value?.accountLoginAction(isKeepPassword)
     }
 
     return {
