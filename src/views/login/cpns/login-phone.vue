@@ -1,6 +1,6 @@
 <template>
   <div class="login-phone">
-    <el-form label-width="auto" :rules="rules" :model="phone">
+    <el-form label-width="auto" :rules="rules" :model="phone" ref="formRef">
       <el-form-item label="手机号" prop="num">
         <el-input v-model="phone.num" />
       </el-form-item>
@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { defineComponent, reactive } from 'vue'
+import { defineComponent, reactive, ref } from 'vue'
 
 export default defineComponent({
   setup() {
@@ -62,9 +62,23 @@ export default defineComponent({
         }
       ]
     }
+
+    const formRef = ref()
+    const phoneLoginAction = () => {
+      // ElementPlus的Form组件的方法 validate（验证）
+      formRef.value.validate((valid) => {
+        if (valid) {
+          console.log('验证信息通过--提交手机登录的逻辑')
+          // 1.开始进行登录验证
+        }
+      })
+    }
+
     return {
       phone,
-      rules
+      rules,
+      formRef,
+      phoneLoginAction
     }
   }
 })
