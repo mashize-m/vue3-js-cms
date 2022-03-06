@@ -2,6 +2,8 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+// 将Vuex保存到本地缓存中，避免刷新后数据丢失
+import { setupStore } from './store'
 
 // 引入normalize.css
 import 'normalize.css'
@@ -19,6 +21,10 @@ import 'element-plus/dist/index.css'
 const app = createApp(App)
 app.use(router)
 app.use(store)
+
+// 将Vuex保存到本地缓存中，避免刷新后数据丢失
+setupStore()
+
 app.mount('#app')
 
 // 封装axios测试
