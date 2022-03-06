@@ -49,18 +49,18 @@ class MzRequest {
           text: '正在请求~',
           background: 'rgba(0,0,0,0.5)'
         })
-        console.log('所有实例都会有的拦截器--请求成功拦截')
+        // console.log('所有实例都会有的拦截器--请求成功拦截')
         return config
       },
       (err) => {
-        console.log('所有实例都会有的拦截器--请求失败拦截')
+        // console.log('所有实例都会有的拦截器--请求失败拦截')
         console.log(err.request.status)
         return err
       }
     )
     this.instance.interceptors.response.use(
       (res) => {
-        console.log('所有实例都会有的拦截器--响应成功拦截')
+        // console.log('所有实例都会有的拦截器--响应成功拦截')
         // 将loading移除
         this.loadingInstance?.close()
 
@@ -73,7 +73,7 @@ class MzRequest {
         }
       },
       (err) => {
-        console.log('所有实例都会有的拦截器--响应失败拦截')
+        // console.log('所有实例都会有的拦截器--响应失败拦截')
         // 将loading移除
         this.loadingInstance?.close()
 

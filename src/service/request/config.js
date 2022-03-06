@@ -12,7 +12,9 @@ const TIME_OUT = 10000
 
 if (process.env.NODE_ENV === 'development') {
   // 配置开发环境的url  --->   这里先用http://123.207.32.32:8000/代替
-  BASE_URL = 'http://123.207.32.32:8000/'
+  // BASE_URL = 'http://123.207.32.32:8000/'
+  // 解决跨域问题 --> 替换成webpack的devServer的proxy的/api
+  BASE_URL = '/api'
 } else if (process.env.NODE_ENV === 'production') {
   // 配置生产环境的url  --->   这里先用http://www.baidu.com代替
   BASE_URL = 'http://www.baidu.com'

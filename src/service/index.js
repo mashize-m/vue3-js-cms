@@ -33,19 +33,19 @@ const mzRequest = new MzRequest({
         config.headers.Authorization = `Bearer ${token}`
       }
 
-      console.log('mzRequest实例拦截器--请求拦截成功')
+      // console.log('mzRequest实例拦截器--请求拦截成功')
       return config
     },
     requestInterceptorsCatch: (err) => {
-      console.log('mzRequest实例拦截器--请求拦截失败')
+      // console.log('mzRequest实例拦截器--请求拦截失败')
       return err
     },
     responseInterceptors: (res) => {
-      console.log('mzRequest实例拦截器--响应拦截成功')
+      // console.log('mzRequest实例拦截器--响应拦截成功')
       return res
     },
     responseInterceptorsCatch: (err) => {
-      console.log('mzRequest实例拦截器--响应拦截失败')
+      // console.log('mzRequest实例拦截器--响应拦截失败')
       return err
     }
   }
