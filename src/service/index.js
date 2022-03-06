@@ -21,6 +21,7 @@
 
 import MzRequest from './request/index'
 import { BASE_URL, TIME_OUT } from './request/config'
+import LocalCache from '@/utils/localcache'
 
 const mzRequest = new MzRequest({
   baseURL: BASE_URL,
@@ -28,7 +29,7 @@ const mzRequest = new MzRequest({
   interceptors: {
     requestInterceptors: (config) => {
       // 请求时携带token
-      const token = ''
+      const token = LocalCache.getCache('token')
       if (token) {
         config.headers.Authorization = `Bearer ${token}`
       }
